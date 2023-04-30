@@ -10,11 +10,11 @@ void pi_montecarlo(int iterations){
     // seed the random number generator with the current time
     srand(time(NULL));
 
-    clock_t start, end;
-    double cpu_time_used;
+    double start_time, end_time;
+    double time_used;
     int dots_inside_circle = 0;
 
-    start = clock();
+    start_time = omp_get_wtime();
 
     #pragma omp parallel reduction(+:dots_inside_circle)
     {
@@ -46,10 +46,10 @@ void pi_montecarlo(int iterations){
     double pi = 4.0 * dots_inside_circle/iterations;
     printf("Considerando todos los hilos, in: %d totales: %d  pi = %f\n", dots_inside_circle, dots_inside_circle, pi);
 
-    end = clock();
-    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    end_time = omp_get_wtime();
+    time_used = end_time - start_time;
 
-    printf("Tiempo total: %f segundos \n", cpu_time_used);
+    printf("Tiempo total: %f segundos \n", time_used);
 
 }
 
