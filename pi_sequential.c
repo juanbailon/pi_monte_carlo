@@ -9,7 +9,11 @@ double pi_montecarlo(int iterations){
     // seed the random number generator with the current time
     srand(time(NULL));
 
+    clock_t start_time, end_time;
+    double total_time;
     int dots_inside_circle = 0;
+
+    start_time = clock();
 
     for(int i=0; i<iterations; i++){
         // generate a random number between the interval (0, 1)
@@ -24,7 +28,11 @@ double pi_montecarlo(int iterations){
         }
     }
 
-    double pi = 4.0 * dots_inside_circle/iterations;    
+    double pi = 4.0 * dots_inside_circle/iterations;
+
+    end_time = clock();
+    total_time = ((double) (end_time - start_time)) / CLOCKS_PER_SEC;
+    printf("Total execution time: %lf seconds. \n", total_time);
 
     return pi; 
 }
